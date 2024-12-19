@@ -1,4 +1,10 @@
-﻿$folderPath = "Output"
+﻿param (
+    [string]$folder,
+)
+
+if (!$folder) {
+  $folder = Read-Host "Please enter the folder path"
+}
 
 # Define the content to be written into each new file
 $contentTemplate = @"
@@ -20,7 +26,7 @@ $contentTemplate = @"
 "@
 
 # Get all PNG files in the folder
-$imageFiles = Get-ChildItem -Path $folderPath -Filter *.png
+$imageFiles = Get-ChildItem -Path $folder -Filter *.png
 
 # Iterate through each PNG file
 foreach ($file in $imageFiles) {

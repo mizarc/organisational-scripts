@@ -102,7 +102,6 @@ foreach ($file in $imageFiles) {
     $file = Get-Item -Path "$bufferFolder\$file"
 
     Invoke-Expression "oxipng -o 4 `"$($file.FullName)`""
-    $file.LastWriteTime = $date
 
     # Format the new file name
     $newFileName = "Screenshot $($date.ToString("yyyy-MM-dd HH-mm-ss")) $newName$($file.Extension)"

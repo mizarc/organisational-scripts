@@ -1,3 +1,16 @@
+param (
+    [string]$inputFolder,
+    [string]$outputFolder
+)
+
+if (!$InputFolder) {
+  $InputFolder = Read-Host "Please enter the input folder path"
+}
+
+if (!$OutputFolder) {
+  $OutputFolder = Read-Host "Please enter the output folder path"
+}
+
 # Add-Type to load the System.Drawing assembly
 Add-Type -AssemblyName System.Drawing
 
@@ -76,10 +89,7 @@ function Crop-Image {
 # Prompt the user for the new name
 $newName = Read-Host -Prompt "Enter name of game"
 
-# Define the input and output folders
-$inputFolder = "Input"
-$bufferFolder = "Input\Buffer"
-$outputFolder = "Output"
+$bufferFolder = "$inputFolder\Buffer"
 
 # Create buffer folder
 if (-not (Test-Path -Path $bufferFolder)) { 

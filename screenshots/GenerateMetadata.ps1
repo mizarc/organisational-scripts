@@ -1,5 +1,5 @@
 ﻿param (
-    [string]$folder,
+    [string]$folder
 )
 
 if (!$folder) {

@@ -86,9 +86,6 @@ function Crop-Image {
     $image.Dispose()
 }
 
-# Prompt the user for the new name
-$newName = Read-Host -Prompt "Enter name of game"
-
 $bufferFolder = "$inputFolder\Buffer"
 
 # Create buffer folder
@@ -101,21 +98,16 @@ $imageFiles = Get-ChildItem -Path $inputFolder -Filter "*.png"
 
 # Loop through each video file and crop them
 foreach ($file in $imageFiles) {
-    $date = $file.LastWriteTime
-
+    # Crop it if the size exceeds more than the size of my 4K monitor
     if (Is-ImageWiderThan $file 3840) {
         Crop-Image $file
     } else {
         Copy-Item -Path $file.FullName -Destination $bufferFolder
     }
 
+    # Losslessly compress the image
     $file = Get-Item -Path "$bufferFolder\$file"
-
     Invoke-Expression "oxipng -o 4 `"$($file.FullName)`""
-
-    # Format the new file name
-    $newFileName = "Screenshot $($date.ToString("yyyy-MM-dd HH-mm-ss")) $newName$($file.Extension)"
-    Rename-Item -Path $file.FullName -NewName $newFileName
     
     # Move to output
     Move-Item -Path "$bufferFolder\$newFileName" -Destination $outputFolder

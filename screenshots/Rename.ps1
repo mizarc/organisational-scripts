@@ -19,4 +19,4 @@ foreach ($file in $imageFiles) {
     Rename-Item -Path $file.FullName -NewName $newFileName
 }
 
-Write-Host "Files have had their modification date set!"
+Write-Host "Files have been renamed!"

@@ -110,7 +110,7 @@ foreach ($file in $imageFiles) {
     Invoke-Expression "oxipng -o 4 `"$($file.FullName)`""
     
     # Move to output
-    Move-Item -Path "$bufferFolder\$newFileName" -Destination $outputFolder
+    Move-Item -Path $file.FullName -Destination $outputFolder
 }
 
 # Delete the temporary folder after processing

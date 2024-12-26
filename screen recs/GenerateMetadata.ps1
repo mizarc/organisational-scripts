@@ -26,7 +26,7 @@ $contentTemplate = @"
 "@
 
 # Get all PNG files in the folder
-$videoFiles = Get-ChildItem -Path $folder -Filter *.mkv
+$videoFiles = Get-ChildItem -Path $folder -Filter *.mp4
 
 # Iterate through each PNG file
 foreach ($file in $videoFiles) {

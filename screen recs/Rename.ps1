@@ -8,7 +8,7 @@ function Get-DateFromFileName {
     )
 
     # Regular expression to match the date string in the file name
-    if ($fileName -match 'Screen Rec (\d{4}-\d{2}-\d{2} \d{2}-\d{2}-\d{2}) Replay') {
+    if ($fileName -match 'Screen Rec (\d{4}-\d{2}-\d{2} \d{2}-\d{2}-\d{2})') {
         $dateString = $matches[1]
         
         try {   
@@ -66,13 +66,14 @@ $videoFiles = Get-ChildItem -Path $folder -Filter *.mkv
 
 # Iterate through each PNG file
 foreach ($file in $videoFiles) {
+    $currentTime = Get-DateFromFileName -fileName $file.Name
+
     # Replay branch subtracts the video duration from the set time, as
     # the replay buffer sets the time to when the recording was saved
     # as opposed to regular recordings which sets the time as the start.
     if ($file.Name -match "Replay") {
         try {
             $videoDuration = Get-VideoDuration -videoPath $file.FullName
-            $currentTime = Get-DateFromFileName -fileName $file.Name
             $newDateTime = $currentTime.Subtract($videoDuration)
             $dateString = $newDateTime.ToString("yyyy-MM-dd HH-mm-ss")
             $newFileName = "Screen Rec $dateString $gameName$($file.Extension)"
@@ -82,7 +83,8 @@ foreach ($file in $videoFiles) {
             Write-Host "Error processing $file $_"
         }
     } else {
-        $newFileName = "$($file.BaseName) $gameName$($file.Extension)"
+        $dateString = $currentTime.ToString("yyyy-MM-dd HH-mm-ss")
+        $newFileName = "Screen Rec $dateString $gameName$($file.Extension)"
         Rename-Item -Path $file.FullName -NewName $newFileName
     }
 }

@@ -7,7 +7,7 @@ if (!$folder) {
 }
 
 # Get all PNG files in the folder
-$videoFiles = Get-ChildItem -Path $folder -Filter *.mp4
+$videoFiles = Get-ChildItem -Path $folder -Recurse -Include *.mp4, *.mkv -File
 
 # Iterate through each PNG file
 foreach ($file in $videoFiles) {

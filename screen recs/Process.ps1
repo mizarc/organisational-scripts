@@ -50,10 +50,11 @@ foreach ($file in $videoFiles) {
     "--encopts g=120" # Sets keyframe interval to 120
 
     Invoke-Expression $HandbrakeCommand
-    Write-Output "brh"
     Write-Output $outputFile
-    Write-Output "duh"
     Move-Item -Path $outputFile -Destination $outputFolder
 }
+
+# Delete the temporary folder after processing
+Remove-Item -Path $bufferFolder -Recurse -Force
 
 Write-Output "Re-encoding completed for all videos in the folder."

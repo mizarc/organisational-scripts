@@ -2,7 +2,7 @@
 mkdir Output
 powershell -NoProfile -ExecutionPolicy Bypass -File "RenameFromModifiedDate.ps1" -folder "Post Crop"
 powershell -NoProfile -ExecutionPolicy Bypass -File "Process.ps1" -InputFolder "Post Crop" -OutputFolder "Output"
-powershell -NoProfile -ExecutionPolicy Bypass -File "UpdateModifiedDate.ps1" -folder "Output"
+powershell -NoProfile -ExecutionPolicy Bypass -File "UpdateExif.ps1" -folder "Output"
 powershell -NoProfile -ExecutionPolicy Bypass -File "GenerateMetadata.ps1" -folder "Output"
 
 

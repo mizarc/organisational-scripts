@@ -26,6 +26,19 @@ function Get-DateFromFileName {
     }
 }
 
+function Get-TimeZoneFromFileName {
+    param (
+        [string]$fileName
+    )
+
+    if ($fileName -match '\+\d{4}') {
+        $timeZone = $matches[0]
+        return $timeZone
+    } else { 
+        return ""
+    }
+}
+
 function Get-VideoDuration {
     param (
         [string]$videoPath
@@ -66,7 +79,12 @@ $videoFiles = Get-ChildItem -Path $folder -Filter *.mkv
 
 # Iterate through each PNG file
 foreach ($file in $videoFiles) {
+    Write-Output $file.Name
     $currentTime = Get-DateFromFileName -fileName $file.Name
+    $timeZone = Get-TimeZoneFromFileName -fileName $file.Name
+    if ($timeZone -ne "") { 
+        $timeZone = " " + $timeZone 
+    }
 
     # Replay branch subtracts the video duration from the set time, as
     # the replay buffer sets the time to when the recording was saved
@@ -76,7 +94,7 @@ foreach ($file in $videoFiles) {
             $videoDuration = Get-VideoDuration -videoPath $file.FullName
             $newDateTime = $currentTime.Subtract($videoDuration)
             $dateString = $newDateTime.ToString("yyyy-MM-dd HH-mm-ss")
-            $newFileName = "Screen Rec $dateString $gameName$($file.Extension)"
+            $newFileName = "Screen Rec $dateString$timeZone $gameName$($file.Extension)"
             Rename-Item -Path $file.FullName -NewName $newFileName
         }
         catch {
@@ -84,7 +102,7 @@ foreach ($file in $videoFiles) {
         }
     } else {
         $dateString = $currentTime.ToString("yyyy-MM-dd HH-mm-ss")
-        $newFileName = "Screen Rec $dateString $gameName$($file.Extension)"
+        $newFileName = "Screen Rec $dateString$timeZone $gameName$($file.Extension)"
         Rename-Item -Path $file.FullName -NewName $newFileName
     }
 }

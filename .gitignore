@@ -1,4 +1,6 @@
 # Ignore the Input, Crop, and Output folders 
 Input/
 Crop/
+Pre Crop/
+Post Crop/
 Output/

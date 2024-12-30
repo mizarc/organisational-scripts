@@ -1,6 +1,6 @@
 @echo off
 mkdir Output
-powershell -NoProfile -ExecutionPolicy Bypass -File "Rename.ps1" -folder "Input"
+powershell -NoProfile -ExecutionPolicy Bypass -File "Rename.ps1" -folder "Input" -fallbackTimeZone "+1000"
 powershell -NoProfile -ExecutionPolicy Bypass -File "Process.ps1" -InputFolder "Input" -OutputFolder "Output"
 powershell -NoProfile -ExecutionPolicy Bypass -File "UpdateExif.ps1" -folder "Output"
 powershell -NoProfile -ExecutionPolicy Bypass -File "GenerateMetadata.ps1" -folder "Output"

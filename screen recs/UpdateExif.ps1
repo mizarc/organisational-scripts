@@ -28,7 +28,7 @@ foreach ($file in $videoFiles) {
     if ($file.Name -match 'Screen Rec (\d{4})-(\d{2})-(\d{2}) (\d{2})-(\d{2})-(\d{2})') {
         $timeZone = Get-TimeZoneFromFileName $file.Name
         if ($timeZone -eq "") { 
-            $timeZone = "+00:00"
+            $timeZone = "+0000"
         }
 
         $newDate = Get-Date -Year $matches[1] -Month $matches[2] -Day $matches[3] -Hour $matches[4] -Minute $matches[5] -Second $matches[6]

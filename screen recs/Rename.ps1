@@ -1,5 +1,6 @@
 param (
-    [string]$folder
+    [string]$folder,
+    [string]$fallbackTimeZone
 )
 
 function Get-DateFromFileName {
@@ -21,8 +22,7 @@ function Get-DateFromFileName {
             return $null
         }
     } else {
-        Write-Error "File name does not match the expected format."
-        return $null
+        return ""
     }
 }
 
@@ -82,8 +82,11 @@ foreach ($file in $videoFiles) {
     Write-Output $file.Name
     $currentTime = Get-DateFromFileName -fileName $file.Name
     $timeZone = Get-TimeZoneFromFileName -fileName $file.Name
-    if ($timeZone -ne "") { 
-        $timeZone = " " + $timeZone 
+    if ($timeZone -eq "") {
+        $timeZone = $fallbackTimeZone
+    }
+    if ($timeZone -ne "") {
+        $timeZone = " " + $timeZone
     }
 
     # Replay branch subtracts the video duration from the set time, as

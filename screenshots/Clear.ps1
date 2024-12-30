@@ -16,5 +16,4 @@ foreach ($file in $imageFiles) {
     Remove-Item -Path $file.FullName
 }
 
-Write-Host "Input has been cleared!" -ForegroundColor Green
-Wrist-Host ""
+Write-Host "Input has been cleared!`n" -ForegroundColor Green

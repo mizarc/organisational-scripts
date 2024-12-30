@@ -19,5 +19,4 @@ foreach ($file in $imageFiles) {
     }
 }
 
-Write-Host "Files have had their modification date set!" -ForegroundColor Green
-Wrist-Host ""
+Write-Host "Files have had their modification date set!`n" -ForegroundColor Green

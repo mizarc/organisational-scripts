@@ -112,7 +112,7 @@ foreach ($file in $imageFiles) {
     } catch {
         $fileName = $file.Name
         Write-Host "Failed to move $fileName to buffer, file already exists.`n" -ForegroundColor Red
-        return
+        exit 1
     }
 
     # Losslessly compress the image
@@ -124,7 +124,7 @@ foreach ($file in $imageFiles) {
         Move-Item -Path $file.FullName -Destination $outputFolder -ErrorAction Stop
     } catch {
         Write-Host "Failed to move $fileName to output, file already exists.`n" -ForegroundColor Red
-        return
+        exit 1
     }
 }
 
@@ -132,4 +132,3 @@ foreach ($file in $imageFiles) {
 Remove-Item -Path $bufferFolder -Recurse -Force
 
 Write-Host "Processing complete!`n" -ForegroundColor Green
-Write-Host ""

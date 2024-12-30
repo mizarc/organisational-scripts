@@ -80,5 +80,4 @@ foreach ($file in $imageFiles) {
     Write-Host "Renamed '$existingName' to '$newFileName'"
 }
 
-Write-Host "Files have been renamed!" -ForegroundColor Green
-Write-Host ""
+Write-Host "Files have been renamed!`n" -ForegroundColor Green

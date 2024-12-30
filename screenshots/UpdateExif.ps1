@@ -41,5 +41,4 @@ foreach ($file in $imageFiles) {
     }
 }
 
-Write-Host "Files have had their exif data set!" -ForegroundColor Green
-Write-Host ""
+Write-Host "Files have had their exif data set!`n" -ForegroundColor Green

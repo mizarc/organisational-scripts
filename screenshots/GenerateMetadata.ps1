@@ -47,5 +47,4 @@ foreach ($file in $imageFiles) {
     $content | Out-File -FilePath $newFileName -Encoding UTF8
 }
 
-Write-Host "Metadata creation completed!" -ForegroundColor Green
-Write-Host ""
+Write-Host "Metadata creation completed!`n" -ForegroundColor Green

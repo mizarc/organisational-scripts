@@ -39,7 +39,7 @@ foreach ($file in $imageFiles) {
             Move-Item -Path $file.FullName -Destination $outputPath
         } catch {
             Write-Host "Failed to move to $outputFolder, drive does not exist.`n" -ForegroundColor Red
-            return
+            exit 1
         }
     }
 }

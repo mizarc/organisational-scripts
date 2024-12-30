@@ -25,6 +25,8 @@ $contentTemplate = @"
 <?xpacket end='w'?>
 "@
 
+Write-Host "Start metadata generation..." -ForegroundColor Cyan
+
 # Get all PNG files in the folder
 $imageFiles = Get-ChildItem -Path $folder -Filter *.png
 
@@ -44,4 +46,5 @@ foreach ($file in $imageFiles) {
     $content | Out-File -FilePath $newFileName -Encoding UTF8
 }
 
-Write-Host "Metadata creation completed!"
+Write-Host "Metadata creation completed!" -ForegroundColor Green
+Write-Host ""

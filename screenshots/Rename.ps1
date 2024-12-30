@@ -47,6 +47,8 @@ if (!$fallbackTimeZone) {
     $fallbackTimeZone = ""
 }
 
+Write-Host "Start renaming..." -ForegroundColor Cyan
+
 # Prompt the user for the game name
 $newName = Read-Host -Prompt "Enter name of game"
 
@@ -75,4 +77,5 @@ foreach ($file in $imageFiles) {
     Rename-Item -Path $file.FullName -NewName $newFileName
 }
 
-Write-Host "Files have been renamed!"
+Write-Host "Files have been renamed!" -ForegroundColor Green
+Write-Host ""

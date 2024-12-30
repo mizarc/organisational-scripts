@@ -88,6 +88,8 @@ function Crop-Image {
 
 $bufferFolder = "$inputFolder\Buffer"
 
+Write-Host "Start processing..." -ForegroundColor Cyan
+
 # Create buffer folder
 if (-not (Test-Path -Path $bufferFolder)) { 
     New-Item -ItemType Directory -Path $bufferFolder | Out-Null
@@ -116,4 +118,5 @@ foreach ($file in $imageFiles) {
 # Delete the temporary folder after processing
 Remove-Item -Path $bufferFolder -Recurse -Force
 
-Write-Output "Processing complete!"
+Write-Host "Processing complete!" -ForegroundColor Green
+Write-Host ""

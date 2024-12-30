@@ -6,6 +6,8 @@ if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
 
+Write-Host "Start updating modified date..." -ForegroundColor Cyan
+
 # Get all PNG files in the folder
 $imageFiles = Get-ChildItem -Path $folder -Filter *.png
 
@@ -17,4 +19,5 @@ foreach ($file in $imageFiles) {
     }
 }
 
-Write-Host "Files have had their modification date set!"
+Write-Host "Files have had their modification date set!" -ForegroundColor Green
+Wrist-Host ""

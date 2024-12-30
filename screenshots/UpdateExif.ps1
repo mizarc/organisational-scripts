@@ -20,6 +20,8 @@ if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
 
+Write-Host "Start updating exif data..." -ForegroundColor Cyan
+
 # Get all PNG files in the folder
 $imageFiles = Get-ChildItem -Path $folder -Filter *.png
 
@@ -37,4 +39,5 @@ foreach ($file in $imageFiles) {
     }
 }
 
-Write-Host "Files have had their exif data set!"
+Write-Host "Files have had their exif data set!" -ForegroundColor Green
+Write-Host ""

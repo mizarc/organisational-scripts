@@ -43,6 +43,7 @@ foreach ($file in $imageFiles) {
     $fileNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
     
     # Write the content to the new file
+    Write-Host "Generating metadata for $($file.Name)"
     $content | Out-File -FilePath $newFileName -Encoding UTF8
 }
 

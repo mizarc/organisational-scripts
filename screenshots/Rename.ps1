@@ -73,8 +73,11 @@ foreach ($file in $imageFiles) {
         $timeZone = " " + $timeZone
     }
     
+    $existingName = $file.Name
     $newFileName = "Screenshot $dateString$timeZone $newName$($file.Extension)"
+    
     Rename-Item -Path $file.FullName -NewName $newFileName
+    Write-Host "Renamed '$existingName' to '$newFileName'"
 }
 
 Write-Host "Files have been renamed!" -ForegroundColor Green

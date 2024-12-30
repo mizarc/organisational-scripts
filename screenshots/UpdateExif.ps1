@@ -35,6 +35,8 @@ foreach ($file in $imageFiles) {
 
         $newDate = Get-Date -Year $matches[1] -Month $matches[2] -Day $matches[3] -Hour $matches[4] -Minute $matches[5] -Second $matches[6]
         $newDateString = $newDate.ToString("yyyy-MM-dd HH:mm:ss")
+
+        Write-Host "Updating exif for $($file.Name)"
         exifTool "-CreateDate=$newDateString$timeZone" -overwrite_original $file.FullName
     }
 }

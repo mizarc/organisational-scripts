@@ -100,23 +100,36 @@ $imageFiles = Get-ChildItem -Path $inputFolder -Filter "*.png"
 
 # Loop through each video file and crop them
 foreach ($file in $imageFiles) {
-    # Crop it if the size exceeds more than the size of my 4K monitor
-    if (Is-ImageWiderThan $file 3840) {
-        Crop-Image $file
-    } else {
-        Copy-Item -Path $file.FullName -Destination $bufferFolder
+    $fileName = $file.Name
+    
+    try {
+        # Crop it if the size exceeds more than the size of my 4K monitor
+        if (Is-ImageWiderThan $file 3840) {
+            Crop-Image $file
+        } else {
+            Copy-Item -Path $file.FullName -Destination $bufferFolder -ErrorAction Stop
+        }
+    } catch {
+        $fileName = $file.Name
+        Write-Host "Failed to move $fileName to buffer, file already exists.`n" -ForegroundColor Red
+        return
     }
 
     # Losslessly compress the image
     $file = Get-Item -Path "$bufferFolder\$file"
     Invoke-Expression "oxipng -o 4 `"$($file.FullName)`""
-    
-    # Move to output
-    Move-Item -Path $file.FullName -Destination $outputFolder
+        
+    try {
+        # Move to output
+        Move-Item -Path $file.FullName -Destination $outputFolder -ErrorAction Stop
+    } catch {
+        Write-Host "Failed to move $fileName to output, file already exists.`n" -ForegroundColor Red
+        return
+    }
 }
 
 # Delete the temporary folder after processing
 Remove-Item -Path $bufferFolder -Recurse -Force
 
-Write-Host "Processing complete!" -ForegroundColor Green
+Write-Host "Processing complete!`n" -ForegroundColor Green
 Write-Host ""

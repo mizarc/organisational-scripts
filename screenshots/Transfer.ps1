@@ -22,9 +22,11 @@ foreach ($file in $imageFiles) {
         $year = $matches[0]
 
         try {
+            Write-Host "Moving $($file.Name) to $($outputFolder)\$year"
+
             # Define destination folder path using the extracted year
-            $outputFolderPath = Join-Path -Path $outputFolder -ChildPath $year
-            
+            $outputFolderPath = Join-Path -Path $outputFolder -ChildPath $year 2>$null
+
             # Create the destination folder if it doesn't exist 
             if (-not (Test-Path -Path $outputFolderPath)) { 
                 New-Item -Path $outputFolderPath -ItemType Directory | Out-Null 
@@ -36,11 +38,10 @@ foreach ($file in $imageFiles) {
             # Move the file to the destination folder
             Move-Item -Path $file.FullName -Destination $outputPath
         } catch {
-            Write-Host "Failed to move to $outputFolder, drive does not exist." -ForegroundColor Magenta
+            Write-Host "Failed to move to $outputFolder, drive does not exist.`n" -ForegroundColor Red
             return
         }
     }
 }
 
-Write-Host "Files have been moved to $outputFolder." -ForegroundColor Green
-Write-Host ""
+Write-Host "Files have been moved to $outputFolder.`n" -ForegroundColor Green

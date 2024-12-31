@@ -26,13 +26,20 @@ $videoFiles = Get-ChildItem -Path $inputFolder -Filter "*.mkv"
 
 # Loop through each video file and re-encode it
 foreach ($file in $videoFiles) {
-    Write-Output $file
     $inputFile = $file.FullName
-    $outputFile = Join-Path $bufferFolder -ChildPath ([System.IO.Path]::ChangeExtension($file.Name, ".mp4"))
+    $outputFile = [System.IO.Path]::ChangeExtension($file.Name, ".mp4")
+    $outputFilePath = Join-Path $bufferFolder -ChildPath $outputFile
+    
+    # Check to see if file already exists in output
+    $testPath = Test-Path -Path (Join-Path -Path $outputFolder -ChildPath $outputFile)
+    if ($testPath) {
+        Write-Host "File '$($file.Name)' has already been re-encoded.`n" -ForegroundColor Red
+        exit 1
+    }
 
     # Define the Handbrake command
     $HandbrakeCommand = "HandBrakeCLI -i `"$inputFile`" " +  # The file input
-    "-o `"$outputFile`" " +  # The file output
+    "-o `"$outputFilePath`" " +  # The file output
     "--optimize " + # Optimise for web play
     "--align-av " + # Aligns the audio and video
     "--crop 0:0:0:0 " + # Do not crop
@@ -53,8 +60,9 @@ foreach ($file in $videoFiles) {
     "--encopts g=120" # Sets keyframe interval to 120
 
     Invoke-Expression $HandbrakeCommand
-    Write-Output $outputFile
-    Move-Item -Path $outputFile -Destination $outputFolder
+    Write-Output $outputFilePath
+    Move-Item -Path $outputFilePath -Destination $outputFolder\
+    Write-Host "Successfully encoded '$($file.Name)'."
 }
 
 # Delete the temporary folder after processing

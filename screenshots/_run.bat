@@ -28,7 +28,7 @@ if %ERRORLEVEL% == 1 (
     exit /b 1
 )
 
-powershell -NoProfile -ExecutionPolicy Bypass -File "Transfer.ps1" -InputFolder "Output" -OutputFolder "X:\screenshots"
+powershell -NoProfile -ExecutionPolicy Bypass -File "Transfer.ps1" -InputFolder "Output" -outputFolder "X:\screenshots"
 if %ERRORLEVEL% == 1 (
     pause
     exit /b 1

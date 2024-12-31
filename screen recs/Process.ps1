@@ -37,7 +37,7 @@ foreach ($file in $videoFiles) {
         exit 1
     }
 
-    Write-Host "Encoding '$($file.Name)'."
+    Write-Host "Starting encode for '$($file.Name)'"
 
     # Define the Handbrake command
     $HandbrakeCommand = "HandBrakeCLI -i `"$inputFile`" " +  # The file input
@@ -64,7 +64,7 @@ foreach ($file in $videoFiles) {
 
     Invoke-Expression $HandbrakeCommand 2>$null
     Move-Item -Path $outputFilePath -Destination $outputFolder\
-    Write-Host "Successfully encoded '$($file.Name)'."
+    Write-Host "Successfully encoded '$($file.Name)'"
 }
 
 # Delete the temporary folder after processing

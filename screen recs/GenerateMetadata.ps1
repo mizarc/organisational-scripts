@@ -44,7 +44,7 @@ foreach ($file in $videoFiles) {
     
     # Write the content to the new file
     $content | Out-File -FilePath $newFileName -Encoding UTF8
-    Write-Host "Generated metadata for $($file.Name)"
+    Write-Host "Generated metadata for '$($file.Name)'"
 }
 
 Write-Host "Metadata creation completed!`n" -ForegroundColor Green

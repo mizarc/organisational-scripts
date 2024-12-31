@@ -35,7 +35,8 @@ foreach ($file in $videoFiles) {
 
         $newDate = Get-Date -Year $matches[1] -Month $matches[2] -Day $matches[3] -Hour $matches[4] -Minute $matches[5] -Second $matches[6]
         $newDateString = $newDate.ToString("yyyy-MM-dd HH:mm:ss")
-        exifTool "-DateTimeOriginal=$newDateString$timeZone" -overwrite_original $file.FullName
+        exifTool "-DateTimeOriginal=$newDateString$timeZone" -overwrite_original $file.FullName >$null
+        Write-Host "Updated exif data for '$($file.Name)'"
     }
 }
 

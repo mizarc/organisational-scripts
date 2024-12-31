@@ -67,6 +67,8 @@ function Get-VideoDuration {
     }
 }
 
+Write-Host "Start renaming..." -ForegroundColor Cyan
+
 if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
@@ -79,7 +81,6 @@ $videoFiles = Get-ChildItem -Path $folder -Filter *.mkv
 
 # Iterate through each PNG file
 foreach ($file in $videoFiles) {
-    Write-Output $file.Name
     $currentTime = Get-DateFromFileName -fileName $file.Name
     $timeZone = Get-TimeZoneFromFileName -fileName $file.Name
     if ($timeZone -eq "") {
@@ -92,22 +93,23 @@ foreach ($file in $videoFiles) {
     # Replay branch subtracts the video duration from the set time, as
     # the replay buffer sets the time to when the recording was saved
     # as opposed to regular recordings which sets the time as the start.
-    if ($file.Name -match "Replay") {
-        try {
-            $videoDuration = Get-VideoDuration -videoPath $file.FullName
-            $newDateTime = $currentTime.Subtract($videoDuration)
-            $dateString = $newDateTime.ToString("yyyy-MM-dd HH-mm-ss")
-            $newFileName = "Screen Rec $dateString$timeZone $gameName$($file.Extension)"
-            Rename-Item -Path $file.FullName -NewName $newFileName
-        }
-        catch {
-            Write-Host "Error processing $file $_"
-        }
-    } else {
-        $dateString = $currentTime.ToString("yyyy-MM-dd HH-mm-ss")
-        $newFileName = "Screen Rec $dateString$timeZone $gameName$($file.Extension)"
-        Rename-Item -Path $file.FullName -NewName $newFileName
+    $dateString = if ($file.Name -match "Replay") { 
+        $videoDuration = Get-VideoDuration -videoPath $file.FullName
+        $newDateTime = $currentTime.Subtract($videoDuration) 
+        $newDateTime.ToString("yyyy-MM-dd HH-mm-ss") 
+    } else { 
+        $currentTime.ToString("yyyy-MM-dd HH-mm-ss") 
+    }
+
+    $newFileName = "Screen Rec $dateString$timeZone $gameName$($file.Extension)"
+
+    try { 
+        Rename-Item -Path $file.FullName -NewName $newFileName -ErrorAction Stop
+        Write-Host "Renamed '$($file.Name)' to '$newFileName'"
+    } catch { 
+        Write-Host "Failed to rename '$($file.Name)' to '$newFileName', file already exists.`n" -ForegroundColor Red
+        exit 1
     }
 }
 
-Write-Host "Files have been renamed!"
+Write-Host "Files have been renamed!`n" -ForegroundColor Green

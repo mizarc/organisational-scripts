@@ -37,9 +37,12 @@ foreach ($file in $videoFiles) {
         exit 1
     }
 
+    Write-Host "Encoding '$($file.Name)'."
+
     # Define the Handbrake command
     $HandbrakeCommand = "HandBrakeCLI -i `"$inputFile`" " +  # The file input
     "-o `"$outputFilePath`" " +  # The file output
+    "--verbose 1" + # Disable verbose output
     "--optimize " + # Optimise for web play
     "--align-av " + # Aligns the audio and video
     "--crop 0:0:0:0 " + # Do not crop
@@ -59,8 +62,7 @@ foreach ($file in $videoFiles) {
     "--markers " + # Preserves chapter markers
     "--encopts g=120" # Sets keyframe interval to 120
 
-    Invoke-Expression $HandbrakeCommand
-    Write-Output $outputFilePath
+    Invoke-Expression $HandbrakeCommand 2>$null
     Move-Item -Path $outputFilePath -Destination $outputFolder\
     Write-Host "Successfully encoded '$($file.Name)'."
 }

@@ -3,6 +3,8 @@ param (
     [string]$outputFolder
 )
 
+Write-Host "Start transferring..." -ForegroundColor Cyan
+
 if (!$InputFolder) {
     $InputFolder = Read-Host "Please enter the input folder path"
 }
@@ -11,8 +13,6 @@ if (!$OutputFolder) {
     $OutputFolder = Read-Host "Please enter the output folder path"
 }
 
-Write-Host "Start transferring..." -ForegroundColor Cyan
-
 # Get all video files in the input folder
 $imageFiles = Get-ChildItem -Path $inputFolder
 
@@ -20,7 +20,6 @@ $imageFiles = Get-ChildItem -Path $inputFolder
 foreach ($file in $imageFiles) {
     if ($file.Name -match '\d{4}') {
         $year = $matches[0]
-        Write-Host "Moving $($file.Name) to $($outputFolder)\$year"
 
         try {
             # Define destination folder path using the extracted year
@@ -41,6 +40,7 @@ foreach ($file in $imageFiles) {
         try {
             # Move the file to the destination folder
             Move-Item -Path $file.FullName -Destination $outputPath -ErrorAction Stop
+            Write-Host "Moved $($file.Name) to $($outputFolder)\$year"
         } catch {
             Write-Host "Failed to move to $outputFolder, file already exists.`n" -ForegroundColor Red
             exit 1

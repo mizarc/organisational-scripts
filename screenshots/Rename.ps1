@@ -39,6 +39,8 @@ function Get-TimeZoneFromFileName {
     }
 }
 
+Write-Host "Start renaming..." -ForegroundColor Cyan
+
 if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
@@ -46,8 +48,6 @@ if (!$folder) {
 if (!$fallbackTimeZone) {
     $fallbackTimeZone = ""
 }
-
-Write-Host "Start renaming..." -ForegroundColor Cyan
 
 # Prompt the user for the game name
 $newName = Read-Host -Prompt "Enter name of game"

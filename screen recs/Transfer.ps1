@@ -3,6 +3,8 @@ param (
     [string]$outputFolder
 )
 
+Write-Host "Start transferring..." -ForegroundColor Cyan
+
 if (!$InputFolder) {
     $InputFolder = Read-Host "Please enter the input folder path"
 }
@@ -33,11 +35,12 @@ foreach ($file in $imageFiles) {
 
             # Move the file to the destination folder
             Move-Item -Path $file.FullName -Destination $outputPath
+            Write-Host "Moved $($file.Name) to $($outputFolder)\$year"
         } catch {
-            Write-Host "Failed to move to $outputFolder, drive does not exist." -ForegroundColor Magenta
-            return
+            Write-Host "Failed to move to $outputFolder, drive does not exist.`n" -ForegroundColor Red
+            exit 1
         }
     }
 }
 
-Write-Host "Files have been moved to $outputFolder." -ForegroundColor Green
+Write-Host "Files have been moved to $outputFolder.`n" -ForegroundColor Green

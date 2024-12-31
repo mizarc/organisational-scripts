@@ -2,10 +2,11 @@ param (
     [string]$folder
 )
 
+Write-Host "Start clearing..." -ForegroundColor Cyan
+
 if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
-
 
 # Get all video files in the input folder
 $imageFiles = Get-ChildItem -Path $folder -Filter "*.mkv"
@@ -15,4 +16,4 @@ foreach ($file in $imageFiles) {
     Remove-Item -Path $file.FullName
 }
 
-Write-Host "Input has been cleared!"
+Write-Host "Folder has been cleared!`n" -ForegroundColor Green

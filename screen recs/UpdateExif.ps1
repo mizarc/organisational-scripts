@@ -16,6 +16,8 @@ function Get-TimeZoneFromFileName {
     }
 }
 
+Write-Host "Start updating exif data..." -ForegroundColor Cyan
+
 if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
@@ -37,4 +39,4 @@ foreach ($file in $videoFiles) {
     }
 }
 
-Write-Host "Files have had their exif data set!"
+Write-Host "Files have had their exif data set!`n" -ForegroundColor Green

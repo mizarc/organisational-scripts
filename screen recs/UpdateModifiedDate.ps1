@@ -2,6 +2,8 @@ param (
     [string]$folder
 )
 
+Write-Host "Start updating modified date..." -ForegroundColor Cyan
+
 if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
@@ -17,4 +19,4 @@ foreach ($file in $videoFiles) {
     }
 }
 
-Write-Host "Files have had their modification date set!"
+Write-Host "Files have had their modification date set!`n" -ForegroundColor Green

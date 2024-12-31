@@ -16,11 +16,11 @@ function Get-TimeZoneFromFileName {
     }
 }
 
+Write-Host "Start updating exif data..." -ForegroundColor Cyan
+
 if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
-
-Write-Host "Start updating exif data..." -ForegroundColor Cyan
 
 # Get all PNG files in the folder
 $imageFiles = Get-ChildItem -Path $folder -Filter *.png

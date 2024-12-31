@@ -3,14 +3,6 @@ param (
     [string]$outputFolder
 )
 
-if (!$InputFolder) {
-  $InputFolder = Read-Host "Please enter the input folder path"
-}
-
-if (!$OutputFolder) {
-  $OutputFolder = Read-Host "Please enter the output folder path"
-}
-
 # Add-Type to load the System.Drawing assembly
 Add-Type -AssemblyName System.Drawing
 
@@ -89,6 +81,14 @@ function Crop-Image {
 $bufferFolder = "$inputFolder\Buffer"
 
 Write-Host "Start processing..." -ForegroundColor Cyan
+
+if (!$InputFolder) {
+  $InputFolder = Read-Host "Please enter the input folder path"
+}
+
+if (!$OutputFolder) {
+  $OutputFolder = Read-Host "Please enter the output folder path"
+}
 
 # Create buffer folder
 if (-not (Test-Path -Path $bufferFolder)) { 

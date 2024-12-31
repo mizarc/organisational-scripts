@@ -2,11 +2,11 @@ param (
     [string]$folder
 )
 
+Write-Host "Start updating modified date..." -ForegroundColor Cyan
+
 if (!$folder) {
   $folder = Read-Host "Please enter the folder path"
 }
-
-Write-Host "Start updating modified date..." -ForegroundColor Cyan
 
 # Get all PNG files in the folder
 $imageFiles = Get-ChildItem -Path $folder -Filter *.png

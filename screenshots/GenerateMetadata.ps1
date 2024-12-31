@@ -2,10 +2,6 @@
     [string]$folder
 )
 
-if (!$folder) {
-  $folder = Read-Host "Please enter the folder path"
-}
-
 # Define the content to be written into each new file
 $contentTemplate = @"
 <?xpacket begin='﻿' id='W5M0MpCehiHzreSzNTczkc9d'?>
@@ -27,6 +23,10 @@ $contentTemplate = @"
 
 Write-Host "Start metadata generation..." -ForegroundColor Cyan
 
+if (!$folder) {
+  $folder = Read-Host "Please enter the folder path"
+}
+
 # Get all PNG files in the folder
 $imageFiles = Get-ChildItem -Path $folder -Filter *.png
 
@@ -43,8 +43,8 @@ foreach ($file in $imageFiles) {
     $fileNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
     
     # Write the content to the new file
-    Write-Host "Generating metadata for $($file.Name)"
     $content | Out-File -FilePath $newFileName -Encoding UTF8
+    Write-Host "Generated metadata for $($file.Name)"
 }
 
 Write-Host "Metadata creation completed!`n" -ForegroundColor Green

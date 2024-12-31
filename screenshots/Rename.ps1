@@ -76,8 +76,14 @@ foreach ($file in $imageFiles) {
     $existingName = $file.Name
     $newFileName = "Screenshot $dateString$timeZone $newName$($file.Extension)"
     
-    Rename-Item -Path $file.FullName -NewName $newFileName
-    Write-Host "Renamed '$existingName' to '$newFileName'"
+    try {
+        Rename-Item -Path $file.FullName -NewName $newFileName -ErrorAction Stop
+        Write-Host "Renamed '$existingName' to '$newFileName'"
+    } catch {
+        Write-Host "Failed to rename '$existingName' to '$newFileName', file already exists.`n" -ForegroundColor Red
+        exit 1
+    }
+    
 }
 
 Write-Host "Files have been renamed!`n" -ForegroundColor Green

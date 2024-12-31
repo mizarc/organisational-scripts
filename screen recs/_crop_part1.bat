@@ -1,4 +1,7 @@
 @echo off
+powershell -command "Write-Host 'Running the pre-crop screen recording pipeline.' -ForegroundColor Magenta"
+echo.
+
 powershell -NoProfile -ExecutionPolicy Bypass -File "Rename.ps1" -folder "Pre Crop" -fallbackTimeZone "+1000"
 if %ERRORLEVEL% == 1 (
     pause

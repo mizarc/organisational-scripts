@@ -1,4 +1,7 @@
 @echo off
+powershell -command "Write-Host 'Running the post-crop screenshot pipeline.' -ForegroundColor Magenta"
+echo.
+
 mkdir Output
 if %ERRORLEVEL% == 1 (
     echo.

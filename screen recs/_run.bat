@@ -1,4 +1,7 @@
 @echo off
+powershell -command "Write-Host 'Running the main screen recording pipeline.' -ForegroundColor Magenta"
+echo.
+
 mkdir Output
 if %ERRORLEVEL% == 1 (
     echo.
@@ -34,11 +37,11 @@ if %ERRORLEVEL% == 1 (
     exit /b 1
 )
 
-set /p input=Clean up? (y/n): 
+set /p input=Pipeline complete. Clean up inputs? (y/n): 
 if /i "%input%"=="y" (
     powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Input"
 )
 
-echo Completed!
+echo Done!
 rmdir /s /q Output
 pause

@@ -40,7 +40,7 @@ foreach ($file in $imageFiles) {
         try {
             # Move the file to the destination folder
             Move-Item -Path $file.FullName -Destination $outputPath -ErrorAction Stop
-            Write-Host "Moved $($file.Name) to $($outputFolder)\$year"
+            Write-Host "Moved '$($file.Name)' to '$($outputFolder)\$year'"
         } catch {
             Write-Host "Failed to move to $outputFolder, file already exists.`n" -ForegroundColor Red
             exit 1

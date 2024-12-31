@@ -1,4 +1,5 @@
 @echo off
+for /f "delims=" %%x in (config.ini) do (set "%%x")
 powershell -command "Write-Host 'Running the post-crop screen recording pipeline.' -ForegroundColor Magenta"
 echo.
 
@@ -31,7 +32,7 @@ if %ERRORLEVEL% == 1 (
     exit /b 1
 )
 
-powershell -NoProfile -ExecutionPolicy Bypass -File "Transfer.ps1" -inputFolder "Output" -outputFolder "X:\gaming-clips"
+powershell -NoProfile -ExecutionPolicy Bypass -File "Transfer.ps1" -inputFolder "Output" -outputFolder "%final_output_folder%"
 if %ERRORLEVEL% == 1 (
     pause
     exit /b 1

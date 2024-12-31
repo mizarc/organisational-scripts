@@ -6,7 +6,7 @@ param (
 Write-Host "Start processing..." -ForegroundColor Cyan
 
 if (!$inputFolder) {
-    inputFolder = Read-Host "Please enter the input folder path"
+    $inputFolder = Read-Host "Please enter the input folder path"
 }
 
 if (!$outputFolder) {

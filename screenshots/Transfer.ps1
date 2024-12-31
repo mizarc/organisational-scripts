@@ -20,25 +20,29 @@ $imageFiles = Get-ChildItem -Path $inputFolder
 foreach ($file in $imageFiles) {
     if ($file.Name -match '\d{4}') {
         $year = $matches[0]
+        Write-Host "Moving $($file.Name) to $($outputFolder)\$year"
 
         try {
-            Write-Host "Moving $($file.Name) to $($outputFolder)\$year"
-
             # Define destination folder path using the extracted year
             $outputFolderPath = Join-Path -Path $outputFolder -ChildPath $year 2>$null
-
-            # Create the destination folder if it doesn't exist 
-            if (-not (Test-Path -Path $outputFolderPath)) { 
-                New-Item -Path $outputFolderPath -ItemType Directory | Out-Null 
-            }
-
-            # Define the destination path for the file
-            $outputPath = Join-Path -Path $outputFolderPath -ChildPath $file.Name
-
-            # Move the file to the destination folder
-            Move-Item -Path $file.FullName -Destination $outputPath
         } catch {
             Write-Host "Failed to move to $outputFolder, drive does not exist.`n" -ForegroundColor Red
+            exit 1
+        }
+
+        # Create the destination folder if it doesn't exist 
+        if (-not (Test-Path -Path $outputFolderPath)) { 
+            New-Item -Path $outputFolderPath -ItemType Directory | Out-Null 
+        }
+
+        # Define the destination path for the file
+        $outputPath = Join-Path -Path $outputFolderPath -ChildPath $file.Name
+
+        try {
+            # Move the file to the destination folder
+            Move-Item -Path $file.FullName -Destination $outputPath -ErrorAction Stop
+        } catch {
+            Write-Host "Failed to move to $outputFolder, file already exists.`n" -ForegroundColor Red
             exit 1
         }
     }

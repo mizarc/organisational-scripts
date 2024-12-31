@@ -3,12 +3,14 @@ param (
     [string]$outputFolder
 )
 
+Write-Host "Start processing..." -ForegroundColor Cyan
+
 if (!$inputFolder) {
-    $folder = Read-Host "Please enter the input folder path"
+    inputFolder = Read-Host "Please enter the input folder path"
 }
 
 if (!$outputFolder) {
-    $folder = Read-Host "Please enter the output folder path"
+    $outputFolder = Read-Host "Please enter the output folder path"
 }
 
 # Define the input and output folders
@@ -24,6 +26,7 @@ $videoFiles = Get-ChildItem -Path $inputFolder -Filter "*.mkv"
 
 # Loop through each video file and re-encode it
 foreach ($file in $videoFiles) {
+    Write-Output $file
     $inputFile = $file.FullName
     $outputFile = Join-Path $bufferFolder -ChildPath ([System.IO.Path]::ChangeExtension($file.Name, ".mp4"))
 
@@ -57,4 +60,4 @@ foreach ($file in $videoFiles) {
 # Delete the temporary folder after processing
 Remove-Item -Path $bufferFolder -Recurse -Force
 
-Write-Output "Re-encoding completed for all videos in the folder."
+Write-Host "Processing complete!`n" -ForegroundColor Green

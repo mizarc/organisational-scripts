@@ -12,7 +12,7 @@ $contentTemplate = @"
   xmlns:digiKam='http://www.digikam.org/ns/1.0/'>
   <digiKam:TagsList>
    <rdf:Seq>
-    <rdf:li>game/{GameName}</rdf:li>
+    <rdf:li>{GameName}</rdf:li>
    </rdf:Seq>
   </digiKam:TagsList>
  </rdf:Description>
@@ -24,7 +24,7 @@ $contentTemplate = @"
 Write-Host "Start metadata generation..." -ForegroundColor Cyan
 
 if (!$folder) {
-  $folder = Read-Host "Please enter the folder path"
+    $folder = Read-Host "Please enter the folder path"
 }
 
 # Get all PNG files in the folder
@@ -36,7 +36,13 @@ foreach ($file in $videoFiles) {
     $fileNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
     $gameName = ($fileNameWithoutExtension -replace 'Screen Rec \d{4}-\d{2}-\d{2} \d{2}-\d{2}-\d{2} ', '').ToLower()
     $gameName = ($gameName -replace '\+\d{4} ', '').ToLower()
-    $content = $contentTemplate -replace '{GameName}', $gameName
+
+    # Add "game/" tag folder if a game, otherwise non-game tag is standalone
+    if ($gameName -eq "non-game") { 
+        $content = $contentTemplate -replace '{GameName}', $gameName 
+    } else { 
+        $content = $contentTemplate -replace '{GameName}', "game/$gameName" 
+    }
 
     # Define the new file name and path
     $newFileName = "$($file.FullName).xmp"

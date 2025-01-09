@@ -3,11 +3,6 @@ for /f "delims=" %%x in (config.ini) do (set "%%x")
 powershell -command "Write-Host 'Running the main screenshot pipeline.' -ForegroundColor Magenta"
 echo.
 
-mkdir Output
-if %ERRORLEVEL% == 1 (
-    echo.
-)
-
 powershell -NoProfile -ExecutionPolicy Bypass -File "Rename.ps1" -folder "Input" -fallbackTimeZone "%fallback_time_zone%"
 if %ERRORLEVEL% == 1 (
     pause
@@ -41,8 +36,9 @@ if %ERRORLEVEL% == 1 (
 set /p input=Pipeline complete. Clean up inputs? (y/n): 
 if /i "%input%"=="y" (
     powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Input"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Output"
+
 )
 
 echo Done!
-rmdir /s /q Output
 pause

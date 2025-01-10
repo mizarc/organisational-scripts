@@ -35,3 +35,17 @@ This is the main pipeline that handles the encoding and organisation process via
 3. Updates the exif data to embed date based on the file name.
 4. Generates the Immich metadata XML file with the tag for the game name.
 5. Transfers it to the dedicated screen recording folder in a year based subdrectory.
+
+### Crop Scripts
+The crop pipeline comes with two scripts. The first is to be run prior to cropping to preserve metadata, the second is run after in order to process the video.
+
+#### Part 1
+1. Renames the file to the format of "Screen Rec YYYY-MM-DD HH-MM-SS +TTTT Game_Name".
+2. Updates the modified date of the file to match the file name if elegible.
+
+#### Part 2
+1. Renames the file to the format of "Screen Rec YYYY-MM-DD HH-MM-SS +TTTT Game_Name" from the modified date.
+2. Processes the video via HandbrakeCLI. Settings are currently embedded in the Process.ps1 script itself.
+3. Updates the exif data to embed date based on the file name.
+4. Generates the Immich metadata XML file with the tag for the game name.
+5. Transfers it to the dedicated screen rec folder in a year based subdrectory.

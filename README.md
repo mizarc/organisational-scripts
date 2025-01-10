@@ -9,6 +9,12 @@ Personal repository to house my own collection of scripting for quick file syste
 - Images file names can have the following information in the file name: `YYYY-MM-DD HH-MM-SS` (date and time) and `+TTTT` (timezone).
 - In the event that timezone is omitted, you can use a command line parameter to add it in.
 - If the date and time information is not included, it makes use of the last modified date of the file instead.
+
+### Setup Script
+Run this first before every other script! This creates the following essential folders:
+- Input
+- Crop
+- Output
   
 ### Run Script
 This is the main pipeline that handles the compression and organisation process via these steps:
@@ -38,6 +44,14 @@ The crop pipeline comes with two scripts. The first is to be run prior to croppi
 - Video file names must date & time formatted as such: `YYYY-MM-DD HH-MM-SS` with timezone optional as `+TTTT`.
 - In the event that timezone is omitted, you can use a command line parameter to add it in.
 - Date and time is required, otherwise the file is skipped.
+
+### Setup Script
+Run this first before every other script! This creates the following essential folders:
+- Input
+- Merge
+- Pre Crop
+- Post Crop
+- Output
 
 ### Run Script
 This is the main pipeline that handles the encoding and organisation process via these steps:

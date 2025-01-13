@@ -9,7 +9,7 @@ if (!$folder) {
 }
 
 # Get all video files in the input folder
-$imageFiles = Get-ChildItem -Path $folder -Filter "*.mkv"
+$imageFiles = Get-ChildItem -Path $folder
 
 # Loop through each video file and crop them
 foreach ($file in $imageFiles) {

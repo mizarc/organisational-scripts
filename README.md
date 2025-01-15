@@ -75,3 +75,8 @@ The crop pipeline comes with two scripts. The first is to be run prior to croppi
 3. Updates the exif data to embed date based on the file name.
 4. Generates the Immich metadata XML file with the tag for the game name.
 5. Transfers it to the dedicated screen rec folder in a year based subdrectory.
+
+### Time Calculation Script
+This takes the earlist timestamped video in the merge folder and allows you to apply addition to the time. Useful for manually changing timestamp when merging and modifying videos in a video editor.
+
+No files are modified in the process.

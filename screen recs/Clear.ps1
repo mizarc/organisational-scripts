@@ -3,6 +3,16 @@ param (
     [string[]]$extensions
 )
 
+Add-Type -AssemblyName Microsoft.VisualBasic
+
+function Move-ToRecycleBin {
+    param (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [string]$Path
+    )
+    [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($Path, 'OnlyErrorDialogs', 'SendToRecycleBin')
+}
+
 Write-Host "Start clearing..." -ForegroundColor Cyan
 
 if (!$folder) {
@@ -20,7 +30,7 @@ foreach ($extension in $extensions) {
 
     # Loop through each video file and crop them
     foreach ($file in $files) {
-        Remove-Item -Path $file.FullName
+        Move-ToRecycleBin -Path $file.FullName
     }
 }
 

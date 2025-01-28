@@ -35,9 +35,7 @@ if %ERRORLEVEL% == 1 (
 
 set /p input=Pipeline complete. Clean up inputs? (y/n): 
 if /i "%input%"=="y" (
-    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Input"
-    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Output"
-
+    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Input" -extensions ".png"
 )
 
 echo Done!

@@ -35,8 +35,7 @@ if %ERRORLEVEL% == 1 (
 
 set /p input=Clean up? (y/n): 
 if /i "%input%"=="y" (
-    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Post Crop"
-    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Output"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Post Crop" -extensions ".mkv",".llc"
 )
 
 echo Completed!

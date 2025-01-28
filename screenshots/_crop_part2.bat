@@ -29,8 +29,7 @@ if %ERRORLEVEL% == 1 (
 
 set /p input=Clean up? (y/n): 
 if /i "%input%"=="y" (
-    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Crop"
-    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Output"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "Clear.ps1" -folder "Crop" -extensions ".png"
 )
 
 echo Completed!
